@@ -1,3 +1,6 @@
 [submodule "dutils"]
 	path = dutils
 	url = git@github.com:harlo/dutils.git
+[submodule "src/Coven"]
+	path = src/Coven
+	url = git@github.com:harlo/coven.git
