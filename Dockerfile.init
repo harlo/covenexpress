@@ -1,0 +1,26 @@
+FROM ubuntu:14.04
+MAINTAINER harlo <harlo.holmes@gmail.com>
+
+# UPDATE
+RUN apt-get update
+RUN apt-get install -yq wget zip unzip openssl make openssh-server python-dev python-pip mercurial libssl-dev libffi-dev gcc
+
+# SET UP USER
+RUN useradd -ms /bin/bash -p $(openssl passwd -1 ${USER_PWD}) ${USER}
+RUN adduser ${USER} sudo
+RUN echo "${USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+ADD src /home/${USER}/Coven
+ADD utils/config.py /home/${USER}/Coven/utils/config.py
+
+RUN chmod +x /home/${USER}/Coven/*.sh
+RUN mkdir /home/${USER}/.ssh
+RUN mv /home/${USER}/Coven/.bash_profile /home/${USER}
+
+# INITIALIZE
+RUN chown -R ${USER}:${USER} /home/${USER}
+USER ${USER}
+ENV HOME /home/${USER}
+WORKDIR /home/${USER}
+
+CMD ["/bin/bash", "Coven/setup.sh"]
