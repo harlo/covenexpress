@@ -9,7 +9,6 @@ then
 	rm $REDIS_PID_FILE
 fi
 
-sudo rm 
 sudo service redis_$REDIS_PORT start
 
 python coven.py start

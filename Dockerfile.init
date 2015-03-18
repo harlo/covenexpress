@@ -3,7 +3,7 @@ MAINTAINER harlo <harlo.holmes@gmail.com>
 
 # UPDATE
 RUN apt-get update
-RUN apt-get install -yq wget zip unzip openssl make openssh-server python-dev python-pip mercurial libssl-dev libffi-dev gcc
+RUN apt-get install -yq wget zip unzip openssl make openssh-server python-dev python-pip mercurial libssl-dev libffi-dev gcc git
 
 # SET UP USER
 RUN useradd -ms /bin/bash -p $(openssl passwd -1 ${USER_PWD}) ${USER}
