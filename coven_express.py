@@ -11,7 +11,6 @@ REDIS_PORT = 6379
 DEFAULT_PORTS = [22]
 
 def init_d(with_config):
-
 	conf_keys = [
 		DUtilsKey['USER'],
 		DUtilsKey['USER_PWD'],
@@ -53,6 +52,17 @@ def init_d(with_config):
 		local("cp %s %s", % (os.path.join(BASE_DIR, "dutils", "conf.py"), os.path.join(BASE_DIR, "src", "Coven", "utils")))
 
 	directives = ["export %s=%d" % (d, int(config[d])) for d in ['API_PORT', 'REDIS_PORT']]
+	
+	export_config = {}
+	export_config_keys = ["TWITTER_ACCESS_TOKEN_KEY", "TWITTER_ACCESS_TOKEN_SECRET", \
+		"TWITTER_CONSUMER_KEY", "TWITTER_CONSUMER_SECRET", "JABBER_SERVER", "JABBER_ID"]
+
+	for key in export_config_keys:
+		if key in config.keys():
+			export_config[key] = config[key]
+
+	with open(os.path.join(BASE_DIR, "src", ".config.json"), 'wb+') as EC:
+		EC.write(json.dumps(export_config))
 
 	from dutils.dutils import generate_init_routine, build_bash_profile
 	return build_bash_profile(directives, os.path.join(BASE_DIR, "src")) and build_dockerfile("Dockerfile.init", config) and generate_init_routine(config, with_config=with_config)

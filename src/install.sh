@@ -98,7 +98,7 @@ resolve_git ~/Coven "git@github.com:harlo/coven.git"
 # CONFIGURE
 mkdir .otr
 mkdir .monitor
-python setup.py
+python setup.py $1
 
 DID_SETUP=$?
 if ([ $DID_SETUP -eq 0 ])
