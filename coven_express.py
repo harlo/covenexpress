@@ -97,6 +97,8 @@ if __name__ == "__main__":
 		res = build_d(with_config)
 	elif argv[1] == "commit":
 		res = commit_d(with_config)
+	elif argv[1] == "finish":
+		res = True
 	elif argv[1] == "update":
 		res = update_d(with_config)
 	
